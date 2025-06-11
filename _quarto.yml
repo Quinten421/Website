@@ -1,0 +1,16 @@
+project:
+  type: website
+
+
+website:
+  title: "Practice Website For BNS3"
+  navbar:
+    background: "#702b84"
+    left:
+      - href: index.qmd
+        text: Home
+      - text: Demographics
+        menu:
+          - href: Practice.qmd
+            text: Personal Demographics
+

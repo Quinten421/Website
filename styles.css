@@ -1,0 +1,57 @@
+/*-- scss:defaults --*/
+
+$cf_purple: #702b84;
+$dark_purple: #42194d; 
+$cf_blue: #2b388f;
+$cf_green: #00944d; 
+$cf_lime: #8bc53f;
+$chc_red: #9d2236;
+$link: #0000EE;
+
+// Links
+
+$link-color:    $link !default;
+$toc-color:     $cf_green !default;
+$navbar-bg:     $cf_purple !default;
+
+ 
+/*-- scss:rules --*/
+ 
+h2 {
+    color: $cf_green;
+    font-size: 30px;
+    font-weight: bold;
+      opacity: 1;
+}
+
+
+h1 {
+  color: $cf_green;
+  text-align: center;
+  opacity: 1;
+}
+
+
+
+figcaption  {
+  font-weight: bold;
+    color: #595d61ff !important;
+      font-size: 15px !important;
+}
+
+body caption {
+  font-weight: bold;
+  font-size: 15px !important;
+  color: #595d61ff !important;
+  text-align: left !important;
+}
+
+
+#Footnotes h1{
+  font-size: 20px;
+  text-align: left;
+}
+    
+#Footnotes{
+  font-size: 13px;
+}

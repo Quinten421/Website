@@ -1,0 +1,271 @@
+---
+name: "BNSp2bp2b3 Survey"
+format: html
+editor: source
+execute:
+  echo: false
+  warning: false
+---
+
+```{r}
+library(tidyverse) #ggplot2, forcats, dplyr
+library(knitr)
+library(sjPlot)
+library(kableExtra)
+library(questionr)
+library(gridExtra)
+library(scales)
+library(chcRne)
+library(ggpubr)
+```
+
+
+```{r}
+load("C:/Users/qarobinson/Downloads/BNSp2_clean.Rdata")
+sjPlot::set_theme(base = theme_bw())
+```
+
+
+The following set of questions were asked in regards to the students' personal demographics. This includes the students' age at the time of the survey (2020), ethnicities they identify as, and the number of dependents they are responsible for taking care of. They were also asked about parents' education, which will help us identify first generation college students based on certain criteria.
+
+<br>
+
+## Age
+*The following was determined by taking the difference between birth date and the time at which the survey was completed `r print_n_reporting(BNSp2b,"age")`*
+
+
+```{r}
+CF_green <- "#00944d"
+plot_color <- CF_green
+
+# Filter different data sets for in line code comparison 
+# BNSp2b_UC <- BNSp2b %>% filter(BNSp2b$school == "UC Berkeley")
+
+BNSp2b_CSU <- BNSp2b %>% filter(BNSp2b$school == "Fresno State" | 
+                  BNSp2b$school =="Chico State" |
+                  BNSp2b$school == "CSU, Northridge")
+
+#BNSp2b_CCC <- BNSp2b %>% filter(BNSp2b$school == "Butte CC" | 
+                  #BNSp2b$school =="Allan Hancock Community College" |
+                 # BNSp2b$school == "Clovis CC" | 
+                 # BNSp2b$school == "Mt. SAC CC" | 
+                 # BNSp2b$school == "Palo Verde CC")
+
+
+
+gghistogram(BNSp2b, x = "age", add = "mean", alpha = 1, 
+            fill = plot_color) + 
+  xlab("Age (years)") + ylab("Number of Students")
+
+
+```
+
+**Survey Question: ** *What is your date of birth?*
+
+**Additional Notes: ** Student age was determined by the difference between birth date and the time in which the survey was completed. Values were rounded down to the nearest whole number. 
+
+**Summary: ** The average age of the students was `r round(mean(BNSp2b$age, na.rm = TRUE),1)` years with a range of `r min(BNSp2b$age, na.rm = TRUE)` to `r max(BNSp2b$age, na.rm = TRUE)`, and a median age of `r median(BNSp2b$age)`. A total of `r count_and_percent(BNSp2b, age, 21)` students were 21 or older, and `r count_and_percent(BNSp2b, age, 30)` students were 30 or older. Mean ages differed between campus types, where the mean age among CSU students was `r round(mean(BNSp2b_CSU$age, na.rm = TRUE),1)`, compared to `r round(mean(BNSp2b_CSU$age, na.rm = TRUE),1)` among CCC students, and `r round(mean(BNSp2b_CSU$age, na.rm = TRUE),1)` among UC students. 
+
+<br>
+
+## Gender Identity
+
+<div class = "row">
+
+::: col-md-7
+```{r}
+rec <- BNSp2b %>% mutate(q7=recode(q7, "Gender non-binary"="Non-binary", "Gender Queer or Gender-Nonconforming" = "Queer or Nonconforming", "Gender Unlisted:" = "Unlisted"))
+
+
+plot_frq(rec$q7, sort.frq="desc", geom.colors = plot_color) + xlab('Gender') + ylab("Number of Students")
+#Should we cut "Gender" from the 3 categories on the right? Exp. "Non-binary" instead of "Gender non-binary"
+```
+:::
+
+**Survey question: ** *What is your gender identity?*
+
+**Summary: ** A total of `r count_and_percent(BNSp2b, q7, "Woman")` students identified as a woman, `r count_and_percent(BNSp2b, q7, "Man")` identified as a man, `r count_and_percent(BNSp2b, q7, "Gender Non-Binay")` identified as gender non-binary, and `r count_and_percent(BNSp2b, q7, "Gender Queer or Gender-Nonconforming")` identified as queer/non-conforming.
+
+
+<br>
+
+
+## Ethnicity (i.e. Identifying with Hispanic Origin)
+
+::: row
+::: col-md-6
+```{r}
+tmp <- data.frame(q8=BNSp2b$q8) %>% mutate(hispanic=as.factor(ifelse(is.na(q8), NA, ifelse(grepl("Yes", q8), "Hispanic", "Non-Hispanic")))) %>% select(-q8)
+
+plot_frq(tmp$hispanic, geom.colors = plot_color, ylim=c(0, 350)) + xlab("") + ylab("Number of Students")
+```
+:::
+
+::: col-md-5
+**Survey Question: ** *Do you identify as Hispanic or Latino or Spanish Origin?*
+
+**Additional Notes: ** Possible answers were pulled from the U.S. Census questionnaire assessing Hispanic Origin: *Mexican; Mexican American; Chicano; Puerto Rican; Cuban; another Hispanic/Latino/Spanish origin; or not of Hispanic/Latino/Spanish origin.* 
+
+**Summary: ** A total of `r count_and_percent(tmp, hispanic, "Hispanic")` students self-identified as having Hispanic Origins and `r count_and_percent(tmp, hispanic, "Non-Hispanic")` students self-identified as Non-Hispanic. 
+:::
+:::
+
+
+```{r}
+tmp <- data.frame(q8=BNSp2b$q8, school=BNSp2b$school) %>% 
+  mutate(hispanic=as.factor(ifelse(is.na(q8), NA, ifelse(grepl("Yes", q8), "Yes", "No"))),
+         school=ifelse(is.na(hispanic), NA, school)) %>% select(-q8)
+```
+
+<br>
+
+## Race
+
+```{r}
+tmp <-
+  BNSp2b %>% select(starts_with("eth_")) %>% mutate(
+    white = ifelse(is.na(eth_white), NA, ifelse(eth_white == 1, 1, 0)),
+    black = ifelse(is.na(eth_african_amer), NA, ifelse(eth_african_amer == 1, 1, 0)),
+    amer_indian = ifelse(is.na(eth_amer_inidian), NA, ifelse(eth_amer_inidian == 1, 1, 0)),
+    asian = ifelse((
+      is.na(eth_chinese) | is.na(eth_filipino) | is.na(eth_asian_indian) |
+        is.na(eth_other_asian) |
+        is.na(eth_vietnamese) | is.na(eth_korean) |
+        is.na(eth_japanese)
+    ),
+    NA,
+    ifelse((
+      eth_chinese == 1 | eth_filipino == 1 | eth_asian_indian  == 1 |
+        eth_other_asian == 1 |
+        eth_vietnamese == 1 | eth_korean == 1 |
+        eth_japanese == 1),1,0)
+    ),
+    hawaiian = ifelse((
+      is.na(eth_pacific_islander) |
+        is.na(eth_chamorro) | is.na(eth_hawaiian) |
+        is.na(eth_samoan)
+    ), NA,
+    ifelse((
+      eth_pacific_islander == 1 | eth_chamorro == 1 | eth_hawaiian == 1 |
+        eth_samoan == 1
+    ),
+    1,
+    0
+    ))
+  ) %>% select(15, 17:21)
+```
+
+
+```{r}
+#"American Indian and Alaska Native" don't have this one working
+tmp %>% na.omit() %>% 
+  summarize(across(everything(), sum)) %>%
+  pivot_longer(cols = everything()) %>%
+  mutate(`Identified Race` = c("Prefer not to answer race", 
+                               "White", 
+                               "Black or African American",
+                               "American Indian and Alaska Native",
+                               "Asian",
+                               "Native Hawaiian and Other Pacific Islander"), 
+         pct = percent(value/nrow(tmp), accuracy=0.1), 
+         `Yes (%)`=paste0(value, " (", pct, ")")) %>%
+  arrange(desc(value)) %>%
+  select(-c(name, value, pct)) %>% 
+  kable() %>% kable_styling(bootstrap_options = "striped")
+```
+
+**Survey Question: ** *What race do you identify as? (Select all that apply)*
+
+**Additional Notes: ** Possible answers were pulled from the U.S. Census questionnaire assessing race: *White, Black or African American, American Indian or Alaska Native, Chinese, Filipino, Asian Indian, Vietnamese, Korean, Japanese, Other Asian, Native Hawaiian, Samoan, Chamorro, and Other Pacific Islander.* These 14 options were collapsed into the 5 broad U.S. Census groups due to small sample sizes in some groups.
+
+**Summary: ** A total of `r count_and_percent(tmp, white, '1')` students self-identified as White, `r count_and_percent(tmp, asian, '1')` as Asian, `r count_and_percent(tmp, black, '1')` as Black or African American, and `r count_and_percent(tmp, hawaiian, '1')` as Native Hawaiian or Other Pacific Islander. Additionally, `r count_and_percent(tmp, eth_PNTA, '1')` students preferred not to answer race, likely due to confusion between race and ethnicity. 
+
+
+<br>
+
+## Dependents
+
+```{r}
+
+# Filter out 0 and "I don't know responses" - Used to get n count of those with dependents 
+BNSp2b$q11 <- factor(BNSp2b$q11, levels = c("I don't have dependents", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
+
+BNSp2b$q11_tmp <- na_if(BNSp2b$q11, "0")
+BNSp2b$q11_tmp <- na_if(BNSp2b$q11_tmp, "I don't have dependents")
+
+BNSp2b$q11_tmp <- fct_drop(BNSp2b$q11_tmp, only = c("I don't have dependents", "0"))
+```
+
+
+```{r}
+p1 <- plot_frq(BNSp2b$q11, geom.colors = plot_color, drop.empty = FALSE,
+                ylim = c(0, 1.6*max(table(BNSp2b$q11))),
+                title = 'Number of Dependents Among Total Sample') + 
+  ylab("Number of Students") + xlab("")
+
+
+p2 <- plot_frq(BNSp2b$q11_tmp, geom.colors = plot_color, drop.empty = FALSE,
+               ylim = c(0, 1.6*max(table(BNSp2b$q11_tmp))),
+               title = 'Number of Dependents Among Those With Dependents') + 
+  xlab('') + 
+  ylab("Number of Students")
+
+grid.arrange(p1, p2)
+```
+
+**Survey Question: ** *If you have dependents, then how many of them receive more than 50% of their financial support from you?*
+
+**Additional Notes: ** These rates differed between campus types. Among CSU students, `r count_and_percent(BNSp2b_CSU, q11, c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))` reported they have dependents receiving more than 50% financial support, compared to  `r count_and_percent(BNSp2b_CSU, q11, c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))` among CCC students, and `r count_and_percent(BNSp2b_CSU, q11, c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))` among UC students.
+
+
+**Summary: ** Among the total sample, `r count_and_percent(BNSp2b, q11, "I don't have dependents")` students reported having no dependents, and `r count_and_percent(BNSp2b, q11, "0")` reported having dependents receiving less than 50% financial support. The remaining `r count_and_percent(BNSp2b, q11, c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))` students reported having dependents receiving more than 50% financial support. Of those with dependents receiving more than 50% financial support, `r count_and_percent(BNSp2b, q11_tmp, '1')` had one dependent, `r count_and_percent(BNSp2b, q11_tmp, '2')` had two, and `r count_and_percent(BNSp2b, q11_tmp, '3')` students had three dependents.
+
+
+<br>
+
+## Parent Education {#Parent_Education}
+
+
+```{r}
+tmp2 <- as.data.frame(table(BNSp2b$q13)) %>%
+  mutate(Percent=lapply(Freq, function(x) paste0('(', percent(x/sum(!is.na(BNSp2b[['q13']])), accuracy = 0.1), ')')),
+         FirstGen=as.character(c(1,1,1,1,1,0,0,2)),
+         Var1=recode(Var1, "Other/Unknown" = "Other/ Unknown")) %>% arrange((desc(Freq)))
+
+ggplot(tmp2, aes(x=factor(Var1, levels=Var1), y=Freq, fill=FirstGen, label=Percent)) + geom_col(colour = "black") +
+  scale_fill_manual(values=c("#336699", "#00944d", "grey")) + geom_text(aes(y=Freq+50)) + ylim(0,290) +
+  scale_x_discrete(labels=label_wrap(10)) +   geom_text(aes(y=Freq + 100, label=Freq)) +
+  xlab('') + ylab("Number of Students") + theme(legend.position = "none") + theme(axis.text.x = element_text(size = 10))
+```
+
+**Survey Question: ** *What is the highest level of education completed by your parents/guardians (for example, if your mother and father both raised you, and your mother has the highest level of education, then indicate her highest level of education)?*
+
+**Additional Notes: ** This data is used to determine a student’s first-generation status. First-generation status is defined by neither parent having completed a bachelor’s degree or higher. The green bars represent first-generation categories, and the blue bars represent non-first-generation categories. Other/unknown responses are shown in gray.
+
+**Summary: ** A total of `r count_and_percent(BNSp2b, firstgen, '1')` students reported first-generation status based on their parent/guardian education level. This outcome is not surprising because all students in this study were either enrolled in EOP or EOPS and both programs recruit students with first-generation status. A total of `r count_and_percent(BNSp2b, q13, "Less than high school")` students reported their parents/guardians did not complete high school, while `r count_and_percent(BNSp2b, q13, "High school diploma or GED")` reported the highest level of education completed by their parents was high school. 
+ 
+
+
+<br>
+
+## First-Generation
+
+::: row
+::: col-md-6
+```{r}
+ tmp3 <- data.frame(firstgen=BNSp2b$firstgen) %>% 
+   mutate(firstgen=factor(ifelse(is.na(firstgen), NA, ifelse(firstgen == 0, "Not First Gen", "First Gen")), levels=c("Not First Gen", "First Gen")))
+ 
+plot_frq(tmp3$firstgen, geom.colors = plot_color, ylim=c(0, 400)) + xlab('') + ylab("Number of Students")
+```
+:::
+
+::: col-md-5
+**Survey Question: ** *This variable was derived from the question in the [Parent Education](#Parent_Education) section.*
+
+**Additional Notes: ** Students who selected their parents' education  as "Less than high school," "High school diploma or GED," "Some college," "Certificate or technical achievement without Associate's degree," or "Associate's degree" were considered first-generation. The `r count_and_percent(BNSp2b, q13, 'Other/Unknown')` students who selected "Other/Unknown" were set as missing values. All other responses were considered not first-generation. 
+
+:::
+:::
+
+**Summary: ** A total of `r count_and_percent(BNSp2b, firstgen, '1')` students reported first-generation status. As stated above, this outcome is not surprising because students in this study were either enrolled in EOP or EOPS, and both programs recruit students with first-generation status.
