@@ -1,0 +1,65 @@
+[
+  {
+    "objectID": "Practice.html",
+    "href": "Practice.html",
+    "title": "Practice Website For BNS3",
+    "section": "",
+    "text": "The following set of questions were asked in regards to the students’ personal demographics. This includes the students’ age at the time of the survey (2020), ethnicities they identify as, and the number of dependents they are responsible for taking care of. They were also asked about parents’ education, which will help us identify first generation college students based on certain criteria."
+  },
+  {
+    "objectID": "Practice.html#age",
+    "href": "Practice.html#age",
+    "title": "Practice Website For BNS3",
+    "section": "Age",
+    "text": "Age\nThe following was determined by taking the difference between birth date and the time at which the survey was completed (n=407, 100.0% of 407 reporting)\n\n\n\n\n\n\n\n\n\nSurvey Question:  What is your date of birth?\nAdditional Notes:  Student age was determined by the difference between birth date and the time in which the survey was completed. Values were rounded down to the nearest whole number.\nSummary:  The average age of the students was 25.1 years with a range of 19.1 to 59.9, and a median age of 22.5. A total of 1 (0.2%) students were 21 or older, and 0 (0.0%) students were 30 or older. Mean ages differed between campus types, where the mean age among CSU students was 25.1, compared to 25.1 among CCC students, and 25.1 among UC students."
+  },
+  {
+    "objectID": "Practice.html#gender-identity",
+    "href": "Practice.html#gender-identity",
+    "title": "Practice Website For BNS3",
+    "section": "Gender Identity",
+    "text": "Gender Identity\n\n\n\n\n\n\n\n\n\n\n\n\nSurvey question:  What is your gender identity?\nSummary:  A total of 244 (60.4%) students identified as a woman, 157 (38.9%) identified as a man, 0 (0.0%) identified as gender non-binary, and 0 (0.0%) identified as queer/non-conforming.\n\n\nEthnicity (i.e. Identifying with Hispanic Origin)\n\n\n\n\n\n\n\n\n\n\n\n\n\nSurvey Question:  Do you identify as Hispanic or Latino or Spanish Origin?\nAdditional Notes:  Possible answers were pulled from the U.S. Census questionnaire assessing Hispanic Origin: Mexican; Mexican American; Chicano; Puerto Rican; Cuban; another Hispanic/Latino/Spanish origin; or not of Hispanic/Latino/Spanish origin.\nSummary:  A total of 284 (71.2%) students self-identified as having Hispanic Origins and 115 (28.8%) students self-identified as Non-Hispanic.\n\n\n\n\n\nRace\n\n\n\n\n\nIdentified Race\nYes (%)\n\n\n\n\nWhite\n155 (38.1%)\n\n\nPrefer not to answer race\n152 (37.3%)\n\n\nAsian\n61 (15.0%)\n\n\nBlack or African American\n26 (6.4%)\n\n\nAmerican Indian and Alaska Native\n26 (6.4%)\n\n\nNative Hawaiian and Other Pacific Islander\n6 (1.5%)\n\n\n\n\n\n\n\nSurvey Question:  What race do you identify as? (Select all that apply)\nAdditional Notes:  Possible answers were pulled from the U.S. Census questionnaire assessing race: White, Black or African American, American Indian or Alaska Native, Chinese, Filipino, Asian Indian, Vietnamese, Korean, Japanese, Other Asian, Native Hawaiian, Samoan, Chamorro, and Other Pacific Islander. These 14 options were collapsed into the 5 broad U.S. Census groups due to small sample sizes in some groups.\nSummary:  A total of 155 (38.1%) students self-identified as White, 61 (15.0%) as Asian, 26 (6.4%) as Black or African American, and 6 (1.5%) as Native Hawaiian or Other Pacific Islander. Additionally, 152 (37.3%) students preferred not to answer race, likely due to confusion between race and ethnicity.\n\n\n\nDependents\n\n\n\n\n\n\n\n\n\nSurvey Question:  If you have dependents, then how many of them receive more than 50% of their financial support from you?\nAdditional Notes:  These rates differed between campus types. Among CSU students, 78 (19.6%) reported they have dependents receiving more than 50% financial support, compared to 78 (19.6%) among CCC students, and 78 (19.6%) among UC students.\nSummary:  Among the total sample, 0 (0.0%) students reported having no dependents, and 319 (80.4%) reported having dependents receiving less than 50% financial support. The remaining 78 (19.6%) students reported having dependents receiving more than 50% financial support. Of those with dependents receiving more than 50% financial support, 43 (55.1%) had one dependent, 22 (28.2%) had two, and 6 (7.7%) students had three dependents.\n\n\n\nParent Education\n\n\n\n\n\n\n\n\n\nSurvey Question:  What is the highest level of education completed by your parents/guardians (for example, if your mother and father both raised you, and your mother has the highest level of education, then indicate her highest level of education)?\nAdditional Notes:  This data is used to determine a student’s first-generation status. First-generation status is defined by neither parent having completed a bachelor’s degree or higher. The green bars represent first-generation categories, and the blue bars represent non-first-generation categories. Other/unknown responses are shown in gray.\nSummary:  A total of 359 (94.7%) students reported first-generation status based on their parent/guardian education level. This outcome is not surprising because all students in this study were either enrolled in EOP or EOPS and both programs recruit students with first-generation status. A total of 185 (46.0%) students reported their parents/guardians did not complete high school, while 78 (19.4%) reported the highest level of education completed by their parents was high school.\n\n\n\nFirst-Generation\n\n\n\n\n\n\n\n\n\n\n\n\n\nSurvey Question:  This variable was derived from the question in the Parent Education section.\nAdditional Notes:  Students who selected their parents’ education as “Less than high school,” “High school diploma or GED,” “Some college,” “Certificate or technical achievement without Associate’s degree,” or “Associate’s degree” were considered first-generation. The 23 (5.7%) students who selected “Other/Unknown” were set as missing values. All other responses were considered not first-generation.\n\n\nSummary:  A total of 359 (94.7%) students reported first-generation status. As stated above, this outcome is not surprising because students in this study were either enrolled in EOP or EOPS, and both programs recruit students with first-generation status."
+  },
+  {
+    "objectID": "Practice.html#ethnicity-i.e.-identifying-with-hispanic-origin",
+    "href": "Practice.html#ethnicity-i.e.-identifying-with-hispanic-origin",
+    "title": "Practice Website For BNS3",
+    "section": "Ethnicity (i.e. Identifying with Hispanic Origin)",
+    "text": "Ethnicity (i.e. Identifying with Hispanic Origin)\n\n\n\n\n\n\n\n\n\n\n\n\n\nSurvey Question:  Do you identify as Hispanic or Latino or Spanish Origin?\nAdditional Notes:  Possible answers were pulled from the U.S. Census questionnaire assessing Hispanic Origin: Mexican; Mexican American; Chicano; Puerto Rican; Cuban; another Hispanic/Latino/Spanish origin; or not of Hispanic/Latino/Spanish origin.\nSummary:  A total of 284 (71.2%) students self-identified as having Hispanic Origins and 115 (28.8%) students self-identified as Non-Hispanic."
+  },
+  {
+    "objectID": "Practice.html#race",
+    "href": "Practice.html#race",
+    "title": "Practice Website For BNS3",
+    "section": "Race",
+    "text": "Race\n\n\n\n\n\nIdentified Race\nYes (%)\n\n\n\n\nWhite\n155 (38.1%)\n\n\nPrefer not to answer race\n152 (37.3%)\n\n\nAsian\n61 (15.0%)\n\n\nBlack or African American\n26 (6.4%)\n\n\nAmerican Indian and Alaska Native\n26 (6.4%)\n\n\nNative Hawaiian and Other Pacific Islander\n6 (1.5%)\n\n\n\n\n\n\n\nSurvey Question:  What race do you identify as? (Select all that apply)\nAdditional Notes:  Possible answers were pulled from the U.S. Census questionnaire assessing race: White, Black or African American, American Indian or Alaska Native, Chinese, Filipino, Asian Indian, Vietnamese, Korean, Japanese, Other Asian, Native Hawaiian, Samoan, Chamorro, and Other Pacific Islander. These 14 options were collapsed into the 5 broad U.S. Census groups due to small sample sizes in some groups.\nSummary:  A total of 155 (38.1%) students self-identified as White, 61 (15.0%) as Asian, 26 (6.4%) as Black or African American, and 6 (1.5%) as Native Hawaiian or Other Pacific Islander. Additionally, 152 (37.3%) students preferred not to answer race, likely due to confusion between race and ethnicity."
+  },
+  {
+    "objectID": "Practice.html#dependents",
+    "href": "Practice.html#dependents",
+    "title": "Practice Website For BNS3",
+    "section": "Dependents",
+    "text": "Dependents\n\n\n\n\n\n\n\n\n\nSurvey Question:  If you have dependents, then how many of them receive more than 50% of their financial support from you?\nAdditional Notes:  These rates differed between campus types. Among CSU students, 78 (19.6%) reported they have dependents receiving more than 50% financial support, compared to 78 (19.6%) among CCC students, and 78 (19.6%) among UC students.\nSummary:  Among the total sample, 0 (0.0%) students reported having no dependents, and 319 (80.4%) reported having dependents receiving less than 50% financial support. The remaining 78 (19.6%) students reported having dependents receiving more than 50% financial support. Of those with dependents receiving more than 50% financial support, 43 (55.1%) had one dependent, 22 (28.2%) had two, and 6 (7.7%) students had three dependents."
+  },
+  {
+    "objectID": "Practice.html#Parent_Education",
+    "href": "Practice.html#Parent_Education",
+    "title": "Practice Website For BNS3",
+    "section": "Parent Education",
+    "text": "Parent Education\n\n\n\n\n\n\n\n\n\nSurvey Question:  What is the highest level of education completed by your parents/guardians (for example, if your mother and father both raised you, and your mother has the highest level of education, then indicate her highest level of education)?\nAdditional Notes:  This data is used to determine a student’s first-generation status. First-generation status is defined by neither parent having completed a bachelor’s degree or higher. The green bars represent first-generation categories, and the blue bars represent non-first-generation categories. Other/unknown responses are shown in gray.\nSummary:  A total of 359 (94.7%) students reported first-generation status based on their parent/guardian education level. This outcome is not surprising because all students in this study were either enrolled in EOP or EOPS and both programs recruit students with first-generation status. A total of 185 (46.0%) students reported their parents/guardians did not complete high school, while 78 (19.4%) reported the highest level of education completed by their parents was high school."
+  },
+  {
+    "objectID": "Practice.html#first-generation",
+    "href": "Practice.html#first-generation",
+    "title": "Practice Website For BNS3",
+    "section": "First-Generation",
+    "text": "First-Generation\n\n\n\n\n\n\n\n\n\n\n\n\n\nSurvey Question:  This variable was derived from the question in the Parent Education section.\nAdditional Notes:  Students who selected their parents’ education as “Less than high school,” “High school diploma or GED,” “Some college,” “Certificate or technical achievement without Associate’s degree,” or “Associate’s degree” were considered first-generation. The 23 (5.7%) students who selected “Other/Unknown” were set as missing values. All other responses were considered not first-generation.\n\n\nSummary:  A total of 359 (94.7%) students reported first-generation status. As stated above, this outcome is not surprising because students in this study were either enrolled in EOP or EOPS, and both programs recruit students with first-generation status."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "index",
+    "section": "",
+    "text": "stuff"
+  }
+]
