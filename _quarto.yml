@@ -14,3 +14,10 @@ website:
           - href: Practice.qmd
             text: Personal Demographics
 
+format:
+  html:
+    theme: 
+      - cosmo
+      - styles.css
+    toc: true
+    toc_float: yes
