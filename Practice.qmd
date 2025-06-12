@@ -24,6 +24,14 @@ library(ggpubr)
 load("C:/Users/qarobinson/Downloads/BNSp2_clean.Rdata")
 #load("C:/Users/slmooradian/Downloads/BNSp2_clean.RData")
 sjPlot::set_theme(base = theme_bw())
+## Get count and percent for all categories greater than or equal to the category
+get_count_and_percent3 <- function(x, category) {   
+  count <- sum(x >= category, na.rm = TRUE)   
+  total <- sum(!is.na(x))   
+  percent <- percent(count / total, accuracy = .1)   
+  result <- paste0(count, " (", percent, ")")  
+  return(result)
+}
 ```
 
 
@@ -34,25 +42,15 @@ The following set of questions were asked in regards to the students' personal d
 ## Age
 *The following was determined by taking the difference between birth date and the time at which the survey was completed `r print_n_reporting(BNSp2b,"age")`*
 
-
 ```{r}
 CF_green <- "#00944d"
 plot_color <- CF_green
 
-# Filter different data sets for in line code comparison 
-# BNSp2b_UC <- BNSp2b %>% filter(BNSp2b$school == "UC Berkeley")
+ages_21 <- sum(ifelse(BNSp2b$age >= 21,1,0)) 
 
 BNSp2b_CSU <- BNSp2b %>% filter(BNSp2b$school == "Fresno State" | 
                   BNSp2b$school =="Chico State" |
                   BNSp2b$school == "CSU, Northridge")
-
-#BNSp2b_CCC <- BNSp2b %>% filter(BNSp2b$school == "Butte CC" | 
-                  #BNSp2b$school =="Allan Hancock Community College" |
-                 # BNSp2b$school == "Clovis CC" | 
-                 # BNSp2b$school == "Mt. SAC CC" | 
-                 # BNSp2b$school == "Palo Verde CC")
-
-
 
 gghistogram(BNSp2b, x = "age", add = "mean", alpha = 1, 
             fill = plot_color) + 
@@ -65,13 +63,11 @@ gghistogram(BNSp2b, x = "age", add = "mean", alpha = 1,
 
 **Additional Notes: ** Student age was determined by the difference between birth date and the time in which the survey was completed. Values were rounded down to the nearest whole number. 
 
-**Summary: ** The average age of the students was `r round(mean(BNSp2b$age, na.rm = TRUE),1)` years with a range of `r min(BNSp2b$age, na.rm = TRUE)` to `r max(BNSp2b$age, na.rm = TRUE)`, and a median age of `r median(BNSp2b$age)`. A total of `r count_and_percent(BNSp2b, age, 21)` students were 21 or older, and `r count_and_percent(BNSp2b, age, 30)` students were 30 or older. Mean ages differed between campus types, where the mean age among CSU students was `r round(mean(BNSp2b_CSU$age, na.rm = TRUE),1)`, compared to `r round(mean(BNSp2b_CSU$age, na.rm = TRUE),1)` among CCC students, and `r round(mean(BNSp2b_CSU$age, na.rm = TRUE),1)` among UC students. 
+**Summary: ** The average age of the students was `r round(mean(BNSp2b$age, na.rm = TRUE),1)` years with a range of `r min(BNSp2b$age, na.rm = TRUE)` to `r max(BNSp2b$age, na.rm = TRUE)`, and a median age of `r median(BNSp2b$age)`. A total of `r get_count_and_percent3(BNSp2b$age, 21)` students were 21 or older, and `r get_count_and_percent3(BNSp2b$age, 30)` students were 30 or older. Where the mean age among CSU students was `r round(mean(BNSp2b_CSU$age, na.rm = TRUE),1)`. 
 
 <br>
 
 ## Gender Identity
-
-<div class = "row">
 
 ::: col-md-7
 ```{r}
@@ -85,11 +81,9 @@ plot_frq(rec$q7, sort.frq="desc", geom.colors = plot_color) + xlab('Gender') + y
 
 **Survey question: ** *What is your gender identity?*
 
-**Summary: ** A total of `r count_and_percent(BNSp2b, q7, "Woman")` students identified as a woman, `r count_and_percent(BNSp2b, q7, "Man")` identified as a man, `r count_and_percent(BNSp2b, q7, "Gender Non-Binay")` identified as gender non-binary, and `r count_and_percent(BNSp2b, q7, "Gender Queer or Gender-Nonconforming")` identified as queer/non-conforming.
-
+**Summary: ** A total of `r count_and_percent(BNSp2b, q7, "Woman")` students identified as a woman, `r count_and_percent(BNSp2b, q7, "Man")` identified as a man, `r count_and_percent(BNSp2b, q7, "Gender non-binary, non-conforming")` identified as gender non-binary and identified as queer/non-conforming.
 
 <br>
-
 
 ## Ethnicity (i.e. Identifying with Hispanic Origin)
 
@@ -158,7 +152,6 @@ tmp <-
 
 
 ```{r}
-#"American Indian and Alaska Native" don't have this one working
 tmp %>% na.omit() %>% 
   summarize(across(everything(), sum)) %>%
   pivot_longer(cols = everything()) %>%
@@ -180,7 +173,6 @@ tmp %>% na.omit() %>%
 **Additional Notes: ** Possible answers were pulled from the U.S. Census questionnaire assessing race: *White, Black or African American, American Indian or Alaska Native, Chinese, Filipino, Asian Indian, Vietnamese, Korean, Japanese, Other Asian, Native Hawaiian, Samoan, Chamorro, and Other Pacific Islander.* These 14 options were collapsed into the 5 broad U.S. Census groups due to small sample sizes in some groups.
 
 **Summary: ** A total of `r count_and_percent(tmp, white, '1')` students self-identified as White, `r count_and_percent(tmp, asian, '1')` as Asian, `r count_and_percent(tmp, black, '1')` as Black or African American, and `r count_and_percent(tmp, hawaiian, '1')` as Native Hawaiian or Other Pacific Islander. Additionally, `r count_and_percent(tmp, eth_PNTA, '1')` students preferred not to answer race, likely due to confusion between race and ethnicity. 
-
 
 <br>
 
@@ -216,11 +208,10 @@ grid.arrange(p1, p2)
 
 **Survey Question: ** *If you have dependents, then how many of them receive more than 50% of their financial support from you?*
 
-**Additional Notes: ** These rates differed between campus types. Among CSU students, `r count_and_percent(BNSp2b_CSU, q11, c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))` reported they have dependents receiving more than 50% financial support, compared to  `r count_and_percent(BNSp2b_CSU, q11, c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))` among CCC students, and `r count_and_percent(BNSp2b_CSU, q11, c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))` among UC students.
+**Additional Notes: ** These rates differed between campus types. Among CSU students, `r count_and_percent(BNSp2b_CSU, q11, c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))` reported they have dependents receiving more than 50% financial support.
 
 
 **Summary: ** Among the total sample, `r count_and_percent(BNSp2b, q11, "I don't have dependents")` students reported having no dependents, and `r count_and_percent(BNSp2b, q11, "0")` reported having dependents receiving less than 50% financial support. The remaining `r count_and_percent(BNSp2b, q11, c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10"))` students reported having dependents receiving more than 50% financial support. Of those with dependents receiving more than 50% financial support, `r count_and_percent(BNSp2b, q11_tmp, '1')` had one dependent, `r count_and_percent(BNSp2b, q11_tmp, '2')` had two, and `r count_and_percent(BNSp2b, q11_tmp, '3')` students had three dependents.
-
 
 <br>
 
@@ -245,8 +236,6 @@ ggplot(tmp2, aes(x=factor(Var1, levels=Var1), y=Freq, fill=FirstGen, label=Perce
 
 **Summary: ** A total of `r count_and_percent(BNSp2b, firstgen, '1')` students reported first-generation status based on their parent/guardian education level. This outcome is not surprising because all students in this study were either enrolled in EOP or EOPS and both programs recruit students with first-generation status. A total of `r count_and_percent(BNSp2b, q13, "Less than high school")` students reported their parents/guardians did not complete high school, while `r count_and_percent(BNSp2b, q13, "High school diploma or GED")` reported the highest level of education completed by their parents was high school. 
  
-
-
 <br>
 
 ## First-Generation
