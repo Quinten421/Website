@@ -8,8 +8,6 @@ website:
   navbar:
     background: "#702b84"
     left:
-      #- href: index.qmd
-       # text: Home
       - text: Demographics
         menu:
           - href: Practice.qmd
