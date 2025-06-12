@@ -22,6 +22,7 @@ library(ggpubr)
 
 ```{r}
 load("C:/Users/qarobinson/Downloads/BNSp2_clean.Rdata")
+#load("C:/Users/slmooradian/Downloads/BNSp2_clean.RData")
 sjPlot::set_theme(base = theme_bw())
 ```
 
