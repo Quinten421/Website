@@ -1,5 +1,5 @@
 ---
-name: "BNSp2bp2b3 Survey"
+name: "BNSp2b Survey"
 format: html
 editor: source
 execute:
@@ -55,8 +55,6 @@ BNSp2b_CSU <- BNSp2b %>% filter(BNSp2b$school == "Fresno State" |
 gghistogram(BNSp2b, x = "age", add = "mean", alpha = 1, 
             fill = plot_color) + 
   xlab("Age (years)") + ylab("Number of Students")
-
-
 ```
 
 **Survey Question: ** *What is your date of birth?*
@@ -217,7 +215,6 @@ grid.arrange(p1, p2)
 
 ## Parent Education {#Parent_Education}
 
-
 ```{r}
 tmp2 <- as.data.frame(table(BNSp2b$q13)) %>%
   mutate(Percent=lapply(Freq, function(x) paste0('(', percent(x/sum(!is.na(BNSp2b[['q13']])), accuracy = 0.1), ')')),
@@ -254,7 +251,6 @@ plot_frq(tmp3$firstgen, geom.colors = plot_color, ylim=c(0, 400)) + xlab('') + y
 **Survey Question: ** *This variable was derived from the question in the [Parent Education](#Parent_Education) section.*
 
 **Additional Notes: ** Students who selected their parents' education  as "Less than high school," "High school diploma or GED," "Some college," "Certificate or technical achievement without Associate's degree," or "Associate's degree" were considered first-generation. The `r count_and_percent(BNSp2b, q13, 'Other/Unknown')` students who selected "Other/Unknown" were set as missing values. All other responses were considered not first-generation. 
-
 :::
 :::
 
